@@ -13,15 +13,16 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
 import { toast } from "sonner";
+import { connectSocket, getSocket, joinDocument, sendDocumentUpdate } from '../../services/socket'
 import { initUser } from '../../lib/auth'
 
 const user = initUser()
 
 const Editor = ({ documentId, authName, initialContent, access: initialAccess, onChange }) => {
+  const socketRef = useRef(null)
   const [access, setAccess] = useState(initialAccess)
+  const [activeCursors, setActiveCursors] = useState([])
   const [isSaving, setIsSaving] = useState(false)
-  const [isTyping, setIsTyping] = useState(false)
-  const typingTimeoutRef = useRef(null)
 
   const editor = useEditor({
     extensions: [
@@ -42,12 +43,13 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
     editable: initialAccess === "write" || authName === user.name,
     autofocus: "end",
     onUpdate: ({ editor }) => {
-      setIsTyping(true) // user is typing
-      clearTimeout(typingTimeoutRef.current)
-      typingTimeoutRef.current = setTimeout(() => setIsTyping(false), 1000) // stop typing after 1s of inactivity
-
+      if (access !== "write" && authName !== user.name) {
+        toast.error("You don’t have write access!")
+        return
+      }
       const newContent = editor.getJSON()
       onChange?.(newContent)
+      sendDocumentUpdate(documentId, newContent)
       saveContent(newContent)
     },
   })
@@ -68,38 +70,31 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
     fetchAccess()
   }, [documentId, authName, editor])
 
-  // Polling for latest content every 2 seconds
+  // Socket.io collaboration
   useEffect(() => {
     if (!editor) return
-    const interval = setInterval(async () => {
-      try {
-        const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/pages/getpagebyid/${documentId}`)
-        const page = res.data.page
-        if (!page) return
+    const socket = getSocket() || connectSocket()
+    socketRef.current = socket
+    joinDocument(documentId, user.name)
 
-        // Update access dynamically
-        const pageAccess = page.access === "write" ? "write" : "read"
-        setAccess(pageAccess)
-        const canEdit = pageAccess === "write" || authName === user.name
-        editor.setEditable(canEdit)
-
-        // Update content only if user is not typing
-        if (!isTyping) {
-          const latestContent = page.content
-          const current = editor.getJSON()
-          if (JSON.stringify(current) !== JSON.stringify(latestContent)) {
-            editor.commands.setContent(latestContent, false)
-            // toast.info("Content updated from server")
-          }
-        }
-      } catch (err) {
-        console.error("Failed to fetch latest content:", err)
+    socket.on('document-update', ({ documentId: id, update }) => {
+      if (id !== documentId) return
+      const current = editor.getJSON()
+      if (JSON.stringify(current) !== JSON.stringify(update)) {
+        editor.commands.setContent(update, false)
       }
-    }, 2000)
+    })
 
-    return () => clearInterval(interval)
-  }, [editor, documentId, isTyping])
+    socket.on('cursor-update', ({ documentId: id, user: u }) => {
+      if (id !== documentId || u.name === user.name) return
+      setActiveCursors(prev => [...prev.filter(c => c.name !== u.name), u])
+    })
 
+    return () => {
+      socket.off('document-update')
+      socket.off('cursor-update')
+    }
+  }, [editor, documentId])
 
   const saveContent = async (content) => {
     if (!content) return
@@ -140,6 +135,15 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
         <EditorContent editor={editor} className="editor-content min-h-[200px] sm:min-h-[300px] md:min-h-[400px]" />
       </div>
 
+      {/* Active cursors */}
+      <div className="absolute top-16 right-2 flex flex-col gap-1 z-20">
+        {activeCursors.map(c => (
+          <div key={c.name} className="flex items-center gap-2 bg-white/90 rounded-full shadow px-2 py-1 border text-xs sm:text-sm md:text-base">
+            {c.avatar && <img src={c.avatar} className="w-4 h-4 sm:w-5 sm:h-5 rounded-full" />}
+            <span>{c.name}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
