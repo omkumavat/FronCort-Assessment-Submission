@@ -2,100 +2,188 @@
 
 A complete, production-ready React.js frontend for a collaborative workspace, combining Confluence-style documentation with Jira-style Kanban boards.
 
-**Project URL**: https://lovable.dev/projects/f1c25c13-88a9-4f90-97d5-1d75f572c2b9
+**Project URL**: [https://project-collab-editor.vercel.app](https://project-collab-editor.vercel.app)
+
+---
 
 ## ✨ Features
 
-- **📝 Rich Text Editor** - Tiptap-based collaborative editor with real-time sync
-- **📋 Kanban Boards** - Drag-and-drop task management with customizable workflows
-- **👥 Real-time Collaboration** - Live presence tracking and instant updates
-- **🎨 Beautiful UI** - Modern design with purple gradient theme
-- **💾 Auto-save** - Never lose your work with automatic saving
-- **📱 Fully Responsive** - Works seamlessly on all devices
-- **🔔 Smart Notifications** - Toast notifications for all important events
+* **📝 Rich Text Editor** - Tiptap-based collaborative editor with real-time sync
+* **📋 Kanban Boards** - Drag-and-drop task management with customizable workflows
+* **👥 Real-time Collaboration** - Live presence tracking and instant updates
+* **🎨 Beautiful UI** - Modern design with purple gradient theme
+* **💾 Auto-save** - Never lose your work with automatic saving
+* **📱 Fully Responsive** - Works seamlessly on all devices
+* **🔔 Smart Notifications** - Toast notifications for all important events
+
+---
 
 ## 🎯 Quick Start
 
+### Prerequisites
+
+* Node.js >= 18
+* npm >= 9
+* MongoDB (local or cloud instance)
+* Optional: `nvm` for Node version management [install here](https://github.com/nvm/nvm#installing-and-updating)
+
+---
+
+### Clone & Setup
+
 ```bash
-npm install
-npm run dev
-```
-
-Visit `http://localhost:8080` to see your app!
-
-## 📚 Full Documentation
-
-See **[SETUP.md](./SETUP.md)** for complete documentation including:
-- Detailed project structure
-- Component usage examples
-- Store management guide
-- Socket.io integration
-- Customization guide
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/f1c25c13-88a9-4f90-97d5-1d75f572c2b9) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate into the project
 cd <YOUR_PROJECT_NAME>
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Frontend
+
+```bash
+# Navigate to frontend folder
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start frontend dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit Frontend: [http://localhost:8080](http://localhost:8080)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+### Backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# Navigate to backend folder
+cd backend
 
-## What technologies are used for this project?
+# Install dependencies
+npm install
 
-This project is built with:
+# Start backend server
+npm start
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Visit Frontend: [http://localhost:4000](http://localhost:4000)
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/f1c25c13-88a9-4f90-97d5-1d75f572c2b9) and click on Share -> Publish.
+## 🏗️ Folder Structure
 
-## Can I connect a custom domain to my Lovable project?
+### Frontend
 
-Yes, you can!
+```
+frontend/
+├─ public/             # Static assets
+├─ src/
+│  ├─ components/      # Reusable components
+│  ├─ pages/           # Page-level components
+│  ├─ store/           # Zustand/Redux store
+│  ├─ utils/           # Helper functions
+│  ├─ hooks/           # Custom React hooks
+│  ├─ styles/          # Tailwind and custom CSS
+│  └─ main.tsx         # React app entry
+├─ package.json
+├─ tsconfig.json
+└─ vite.config.ts
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Backend
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+backend/
+├─ controllers/        # Express route controllers
+├─ models/             # MongoDB models
+├─ routes/             # Express routes
+├─ socket/             # Socket.io setup & handlers
+├─ config/             # DB and environment config
+├─ index.js           # Main backend entry
+├─ package.json
+```
+
+---
+
+## 📝 Workflow & Collaboration
+
+1. **Feature Development**
+
+   * Create a new branch from `main`:
+
+     ```bash
+     git checkout -b feature/<feature-name>
+     ```
+   * Make changes and commit with descriptive messages:
+
+     ```bash
+     git add .
+     git commit -m "Add drag-and-drop kanban feature"
+     ```
+   * Push to remote and open a pull request.
+
+2. **Code Reviews**
+
+   * Team members review PRs for quality, readability, and performance.
+   * Ensure all features are tested locally before merging.
+
+3. **Real-time Collaboration**
+
+   * Tiptap editor supports live cursor and text sync for multiple users.
+   * Kanban boards update instantly across all connected clients via Socket.io.
+
+4. **Notifications & Feedback**
+
+   * Toast notifications appear for mentions, task updates, and editor changes.
+
+5. **Deployment**
+
+   * Frontend: Vercel
+   * Backend: Render
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React.js, TypeScript, Vite, Tailwind CSS, shadcn-ui, Tiptap
+* **Backend:** Node.js, Express.js, Socket.io, MongoDB (Mongoose)
+* **Collaboration:** Real-time sync via WebSockets
+* **Deployment:** Vercel (frontend) + any cloud backend service
+
+---
+
+## 📚 Full Documentation & Guides
+
+1. **Detailed Project Structure**
+
+* Frontend and backend folders organized with clear separation of concerns.
+* Components, pages, store, hooks, and utilities are modular for easy maintenance.
+* Backend controllers, models, routes, middlewares, and socket logic are organized by functionality.
+
+2. **Component Usage Examples**
+
+* Each reusable component in frontend/src/components has a usage example in its README or Storybook.
+* Example: Button.jsx can be used as <Button variant="primary">Click Me</Button>.
+
+3. **Store Management Guide**
+
+* Uses Zustand (or Redux) for state management.
+* Central store in frontend/src/store manages user, document, and board states.
+* Actions and selectors follow modular structure for scalability.
+
+4. **Socket.io Integration**
+
+* Backend Socket.io server in backend/index.js
+* Frontend Socket.io client setup in frontend/src/services/socket.js
+* Handles real-time editor updates, board drag-and-drop, presence tracking, and notifications.
+
+5. **Customization & Theme Guide**
+
+* Tailwind CSS + shadcn-ui for design system.
+* Theme colors and gradients can be modified in frontend/src/styles/tailwind.config.js.
+* Components support props for size, color, and variant customization.
