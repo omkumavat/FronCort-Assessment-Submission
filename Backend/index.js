@@ -142,6 +142,10 @@ const io = new Server(server, {
 app.use('/server/pages', Pages);
 app.use('/server/projects',Project)
 
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
 
 const userSessions = new Map(); 
 
