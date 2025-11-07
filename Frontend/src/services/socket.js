@@ -6,7 +6,7 @@ export const connectSocket = () => {
   if (!socket) {
     socket = io("https://froncort-assessment-submission.onrender.com", {
       autoConnect: true,
-      transports: ["websocket"], // force WebSocket
+      transports: ["websocket"], 
     });
 
     socket.on("connect", () => console.log("✅ Socket connected:", socket.id));
