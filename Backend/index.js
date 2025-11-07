@@ -17,14 +17,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Backend API routes
+// API routes
 app.use('/server/pages', Pages);
 app.use('/server/projects', Project);
 app.get('/', (req, res) => res.send('API is running...'));
 
-// HTTP + Socket.IO server
+// HTTP server + Socket.IO
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL || 'https://project-collab-editor.vercel.app',
@@ -32,7 +31,7 @@ const io = new Server(server, {
   },
 });
 
-const userSessions = new Map(); // socket.id -> { user info, pageId }
+const userSessions = new Map(); // socket.id -> { user info + pageId }
 
 io.on('connection', (socket) => {
   console.log('🟢 New connection:', socket.id);
@@ -53,24 +52,23 @@ io.on('connection', (socket) => {
   });
 
   // --- DOCUMENT UPDATES ---
-  socket.on('document-update', async ({ pageId, update, user }) => {
-    if (!pageId || !update) return;
+  // socket.on('document-update', async ({ pageId, update, user }) => {
+  //   if (!pageId || !update) return;
 
-    // Update DB
-    try {
-      await Page.updateOne({ pageId }, { content: update });
-    } catch (err) {
-      console.error('DB update error:', err.message);
-    }
+  //   // Save to DB
+  //   try {
+  //     await Page.updateOne({ pageId }, { content: update });
+  //   } catch (err) {
+  //     console.error('DB update error:', err.message);
+  //   }
 
-    // Emit to other users
-    socket.to(pageId).emit('document-update', { documentId: pageId, update, user });
-  });
+  //   // Emit update to all other clients in the room
+  //   socket.to(pageId).emit('document-update', { documentId: pageId, update, user });
+  // });
 
   // --- LEAVE DOCUMENT ---
   socket.on('user-left', ({ pageId, user }) => {
-    if (!user || !pageId) return;
-
+    if (!pageId || !user) return;
     console.log(`👋 ${user.name} left page ${pageId}`);
     socket.to(pageId).emit('user-left', { user });
     userSessions.delete(socket.id);
@@ -89,7 +87,7 @@ io.on('connection', (socket) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 server.listen(PORT, () =>
-  console.log(`🚀 Server running on https://froncort-assessment-submission.onrender.com`)
+  console.log(`🚀 Server running on ${process.env.CLIENT_URL}`)
 );
