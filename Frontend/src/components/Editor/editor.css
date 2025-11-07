@@ -12,6 +12,13 @@
   background-color: #fff;
 }
 
+.mention {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
 .editor-content {
   min-height: 70vh;   /* makes sure content area is large */
   font-size: 16px;    /* larger text */

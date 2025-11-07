@@ -1,118 +1,4 @@
-// // FILE: backend/server.js
-// import express from 'express';
-// import { Server } from 'socket.io';
-// import http from 'http';
-// import cors from 'cors';
 
-// const app = express();
-// app.use(cors());
-// const server = http.createServer(app);
-
-// const io = new Server(server, {
-//   cors: {
-//     origin: '*',
-//     methods: ['GET', 'POST'],
-//   },
-// });
-
-// // Map to track active users: socket.id -> { userId, documentId?, boardId? }
-// const activeUsers = new Map();
-
-// io.on('connection', (socket) => {
-//   console.log('🟢 User connected:', socket.id);
-
-//   // ---------------- DOCUMENTS ----------------
-//   socket.on('join-document', ({ documentId, userId }) => {
-//     if (!documentId || !userId) return;
-//     socket.join(`doc:${documentId}`);
-//     activeUsers.set(socket.id, { userId, documentId });
-//     console.log(`📄 ${userId} joined document ${documentId}`);
-
-//     // Notify others in the document about new user
-//     socket.to(`doc:${documentId}`).emit('presence-update', {
-//       type: 'join',
-//       userId,
-//       documentId,
-//     });
-//   });
-
-//   socket.on('leave-document', ({ documentId, userId }) => {
-//     if (!documentId) return;
-//     socket.leave(`doc:${documentId}`);
-//     activeUsers.delete(socket.id);
-//     console.log(`🚪 ${userId} left document ${documentId}`);
-
-//     socket.to(`doc:${documentId}`).emit('presence-update', {
-//       type: 'leave',
-//       userId,
-//       documentId,
-//     });
-//   });
-
-//   socket.on('document-update', ({ documentId, update, userId }) => {
-//     if (!documentId || !update) return;
-//     socket.to(`doc:${documentId}`).emit('document-update', {
-//       documentId,
-//       update,
-//       userId,
-//     });
-//   });
-
-//   // Request or send full document
-//   socket.on('request-document', ({ documentId }) => {
-//     socket.to(`doc:${documentId}`).emit('request-document', { documentId });
-//   });
-
-//   socket.on('send-document', ({ documentId, data }) => {
-//     socket.to(`doc:${documentId}`).emit('send-document', { documentId, data });
-//   });
-
-//   // ---------------- BOARDS ----------------
-//   socket.on('join-board', ({ boardId, userId }) => {
-//     if (!boardId || !userId) return;
-//     socket.join(`board:${boardId}`);
-//     console.log(`🗂️ ${userId} joined board ${boardId}`);
-//   });
-
-//   socket.on('board-update', ({ boardId, update, userId }) => {
-//     if (!boardId || !update) return;
-//     socket.to(`board:${boardId}`).emit('board-update', { boardId, update, userId });
-//   });
-
-//   // ---------------- PRESENCE ----------------
-//   socket.on('presence-update', (presence) => {
-//     const room = presence.documentId
-//       ? `doc:${presence.documentId}`
-//       : presence.projectId
-//       ? `project:${presence.projectId}`
-//       : null;
-
-//     if (room) {
-//       socket.to(room).emit('presence-update', presence);
-//     } else {
-//       socket.broadcast.emit('presence-update', presence);
-//     }
-//   });
-
-//   // ---------------- DISCONNECT ----------------
-//   socket.on('disconnect', () => {
-//     const userInfo = activeUsers.get(socket.id);
-//     if (userInfo?.documentId) {
-//       socket.to(`doc:${userInfo.documentId}`).emit('presence-update', {
-//         type: 'leave',
-//         userId: userInfo.userId,
-//         documentId: userInfo.documentId,
-//       });
-//     }
-//     activeUsers.delete(socket.id);
-//     console.log('🔴 Client disconnected:', socket.id);
-//   });
-// });
-
-// // Start server
-// server.listen(4000, () =>
-//   console.log('🚀 Socket.io server running on http://localhost:4000')
-// );
 
 import express from 'express';
 import { Server } from 'socket.io';
@@ -183,6 +69,11 @@ io.on("connection", (socket) => {
     userSessions.delete(socket.id);
   });
 
+  socket.on("mention", (data) => {
+    // Broadcast to all users except sender
+    socket.broadcast.emit("mention", data)
+  })
+
   // --- Handle disconnect (tab closed, refresh, etc.) ---
   socket.on("disconnect", () => {
     const userData = userSessions.get(socket.id);
@@ -196,5 +87,5 @@ io.on("connection", (socket) => {
 
 
 // ------------------- Start server -------------------
-server.listen(4000, () => console.log('🚀 Server running on http://localhost:4000'));
+server.listen(4000, () => console.log('🚀 Server running on https://froncort-assessment-submission.onrender.com'));
 

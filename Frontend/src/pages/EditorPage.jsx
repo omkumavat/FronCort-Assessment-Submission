@@ -147,163 +147,163 @@ const EditorPage = () => {
   return (
     <div className="max-w-6xl mx-auto mt-4 px-2 sm:px-4 md:px-6 space-y-4">
 
-  {/* Header */}
-  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
-    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">{page.title}</h1>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold truncate">{page.title}</h1>
 
-    <div className="flex flex-wrap sm:flex-row gap-2">
-      {/* <Button
+        <div className="flex flex-wrap sm:flex-row gap-2">
+          {/* <Button
         onClick={handleFetchVersions}
         variant="outline"
         className="hover:bg-muted hover:text-foreground flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
       >
         <List className="h-4 w-4 sm:h-5 sm:w-5" /> Versions
       </Button> */}
-      <Button
-        onClick={handleShare}
-        variant="outline"
-        className="hover:bg-muted hover:text-foreground flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
-      >
-        <Share2 className="h-4 w-4 sm:h-5 sm:w-5" /> Share
-      </Button>
+          <Button
+            onClick={handleShare}
+            variant="outline"
+            className="hover:bg-muted hover:text-foreground flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+          >
+            <Share2 className="h-4 w-4 sm:h-5 sm:w-5" /> Share
+          </Button>
 
-      {page.authorId === user.name && (
-        <Button
-          onClick={handleOpenAccessModal}
-          variant="outline"
-          className="hover:bg-muted hover:text-foreground flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
-        >
-          <Users className="h-4 w-4 sm:h-5 sm:w-5" /> Manage Access
-        </Button>
-      )}
-    </div>
-  </div>
-
-  {/* Editor */}
-  <Editor
-    authName={page.authorId}
-    documentId={pageId}
-    initialContent={page.content}
-    onChange={handleContentChange}
-    access={page.access === 'write' ? 'write' : 'read'}
-  />
-
-  {/* Share Modal */}
-  <Dialog open={shareModalOpen} onOpenChange={setShareModalOpen}>
-    <DialogContent className="w-full max-w-md sm:max-w-lg">
-      <DialogHeader>
-        <DialogTitle className="text-lg sm:text-xl font-semibold">Share Page Link</DialogTitle>
-      </DialogHeader>
-
-      <div className="flex flex-col sm:flex-row gap-2 mt-3">
-        <Input value={shareLink} readOnly className="flex-1" />
-        <Button
-          variant="outline"
-          onClick={copyToClipboard}
-          className="hover:bg-muted hover:text-foreground flex items-center justify-center"
-        >
-          <Copy className="h-4 w-4 sm:h-5 sm:w-5" />
-        </Button>
-      </div>
-
-      <DialogFooter>
-        <Button
-          onClick={() => setShareModalOpen(false)}
-          className="hover:bg-muted hover:text-foreground mt-2 sm:mt-0"
-        >
-          Close
-        </Button>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
-
-  {/* Access Modal */}
-  <Dialog open={accessModalOpen} onOpenChange={setAccessModalOpen}>
-    <DialogContent className="w-full max-w-md sm:max-w-lg">
-      <DialogHeader>
-        <DialogTitle className="text-lg sm:text-xl font-semibold">Manage Access</DialogTitle>
-      </DialogHeader>
-
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-3">
-        <Select value={newAccess} onValueChange={setNewAccess}>
-          <SelectTrigger className="w-[120px]">
-            <SelectValue placeholder="Access" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="read">Read</SelectItem>
-            <SelectItem value="write">Write</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button
-          onClick={handleAddUserAccess}
-          className="hover:bg-muted hover:text-foreground flex-1 sm:flex-none"
-        >
-          Add
-        </Button>
-      </div>
-
-      <DialogFooter>
-        <Button onClick={() => setAccessModalOpen(false)} className="hover:bg-muted hover:text-foreground mt-2 sm:mt-0">
-          Close
-        </Button>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
-
-  {/* Versions Modal */}
- <Dialog open={versionsModalOpen} onOpenChange={setVersionsModalOpen}>
-  <DialogContent className="w-full max-w-md sm:max-w-lg">
-    <DialogHeader>
-      <DialogTitle className="text-lg sm:text-xl font-semibold">Page Versions</DialogTitle>
-    </DialogHeader>
-
-    <div className="space-y-3 mt-3 max-h-96 overflow-y-auto">
-      {versions.length === 0 ? (
-        <div className="text-gray-500 text-sm sm:text-base">No versions found</div>
-      ) : (
-        versions.map((v) => {
-          // Extract first paragraph text from TipTap JSON content
-          const firstParagraph = v.content?.content?.[0]?.content?.[0]?.text || "No content preview";
-
-          return (
-            <div
-              key={v._id}
-              className="border p-3 rounded flex flex-col sm:flex-row gap-2 sm:gap-4 bg-gray-50 items-start sm:items-center"
+          {page.authorId === user.name && (
+            <Button
+              onClick={handleOpenAccessModal}
+              variant="outline"
+              className="hover:bg-muted hover:text-foreground flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
             >
-              {/* Avatar + editor info */}
-              <div className="flex items-center gap-2">
-                {v.avatarUrl && (
-                  <img
-                    src={v.avatarUrl}
-                    alt={v.editedBy}
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
-                  />
-                )}
-                <div className="text-xs sm:text-sm text-gray-500">
-                  Edited by <span className="font-medium">{v.editedBy}</span> on {new Date(v.createdAt).toLocaleString()}
-                </div>
-              </div>
+              <Users className="h-4 w-4 sm:h-5 sm:w-5" /> Manage Access
+            </Button>
+          )}
+        </div>
+      </div>
 
-              {/* Version preview */}
-              <div className="text-sm sm:text-base text-gray-700 truncate sm:truncate-none flex-1">
-                {firstParagraph}
-              </div>
-            </div>
-          );
-        })
-      )}
+      {/* Editor */}
+      <Editor
+        authName={page.authorId}
+        documentId={pageId}
+        initialContent={page.content}
+        onChange={handleContentChange}
+        access={page.access === 'write' ? 'write' : 'read'}
+      />
+
+      {/* Share Modal */}
+      <Dialog open={shareModalOpen} onOpenChange={setShareModalOpen}>
+        <DialogContent className="w-full max-w-md sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-lg sm:text-xl font-semibold">Share Page Link</DialogTitle>
+          </DialogHeader>
+
+          <div className="flex flex-col sm:flex-row gap-2 mt-3">
+            <Input value={shareLink} readOnly className="flex-1" />
+            <Button
+              variant="outline"
+              onClick={copyToClipboard}
+              className="hover:bg-muted hover:text-foreground flex items-center justify-center"
+            >
+              <Copy className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Button>
+          </div>
+
+          <DialogFooter>
+            <Button
+              onClick={() => setShareModalOpen(false)}
+              className="hover:bg-muted hover:text-foreground mt-2 sm:mt-0"
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Access Modal */}
+      <Dialog open={accessModalOpen} onOpenChange={setAccessModalOpen}>
+        <DialogContent className="w-full max-w-md sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-lg sm:text-xl font-semibold">Manage Access</DialogTitle>
+          </DialogHeader>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-3">
+            <Select value={newAccess} onValueChange={setNewAccess}>
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder="Access" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="read">Read</SelectItem>
+                <SelectItem value="write">Write</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button
+              onClick={handleAddUserAccess}
+              className="hover:bg-muted hover:text-foreground flex-1 sm:flex-none"
+            >
+              Add
+            </Button>
+          </div>
+
+          <DialogFooter>
+            <Button onClick={() => setAccessModalOpen(false)} className="hover:bg-muted hover:text-foreground mt-2 sm:mt-0">
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Versions Modal */}
+      <Dialog open={versionsModalOpen} onOpenChange={setVersionsModalOpen}>
+        <DialogContent className="w-full max-w-md sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-lg sm:text-xl font-semibold">Page Versions</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-3 mt-3 max-h-96 overflow-y-auto">
+            {versions.length === 0 ? (
+              <div className="text-gray-500 text-sm sm:text-base">No versions found</div>
+            ) : (
+              versions.map((v) => {
+                // Extract first paragraph text from TipTap JSON content
+                const firstParagraph = v.content?.content?.[0]?.content?.[0]?.text || "No content preview";
+
+                return (
+                  <div
+                    key={v._id}
+                    className="border p-3 rounded flex flex-col sm:flex-row gap-2 sm:gap-4 bg-gray-50 items-start sm:items-center"
+                  >
+                    {/* Avatar + editor info */}
+                    <div className="flex items-center gap-2">
+                      {v.avatarUrl && (
+                        <img
+                          src={v.avatarUrl}
+                          alt={v.editedBy}
+                          className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
+                        />
+                      )}
+                      <div className="text-xs sm:text-sm text-gray-500">
+                        Edited by <span className="font-medium">{v.editedBy}</span> on {new Date(v.createdAt).toLocaleString()}
+                      </div>
+                    </div>
+
+                    {/* Version preview */}
+                    <div className="text-sm sm:text-base text-gray-700 truncate sm:truncate-none flex-1">
+                      {firstParagraph}
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button onClick={() => setVersionsModalOpen(false)} className="mt-2 sm:mt-0">
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+
     </div>
-
-    <DialogFooter>
-      <Button onClick={() => setVersionsModalOpen(false)} className="mt-2 sm:mt-0">
-        Close
-      </Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
-
-
-</div>
 
   );
 };
