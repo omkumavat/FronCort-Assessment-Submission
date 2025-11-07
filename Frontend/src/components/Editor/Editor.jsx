@@ -89,7 +89,7 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
           const current = editor.getJSON()
           if (JSON.stringify(current) !== JSON.stringify(latestContent)) {
             editor.commands.setContent(latestContent, false)
-            toast.info("Content updated from server")
+            // toast.info("Content updated from server")
           }
         }
       } catch (err) {
