@@ -137,8 +137,13 @@ app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: 'https://project-collab-editor.vercel.app', methods: ['GET', 'POST'] },
+  cors: {
+    origin: "https://project-collab-editor.vercel.app", // <-- frontend URL
+    methods: ["GET", "POST"],
+  },
+  transports: ["websocket"], // force WebSocket only
 });
+
 
 app.use('/server/pages', Pages);
 app.use('/server/projects',Project)
