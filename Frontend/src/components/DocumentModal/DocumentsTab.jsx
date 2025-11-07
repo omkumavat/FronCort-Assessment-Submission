@@ -89,7 +89,7 @@ const DocumentsTab = ({ projectId, pages, fetchProject, creator, accessList }) =
             </CardContent>
           </Card>
         )) : (
-          <p className="text-center col-span-full text-muted-foreground mt-6">No pages yet</p>
+          <p className="col-span-full text-muted-foreground -mt-5">No pages yet</p>
         )}
       </div>
 

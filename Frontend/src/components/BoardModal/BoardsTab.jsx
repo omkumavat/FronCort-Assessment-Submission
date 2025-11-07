@@ -408,7 +408,7 @@ const BoardsTab = ({ projectId, boards: propBoards, fetchProject, creator, acces
               </Droppable>
             ))
           ) : (
-            <p>No boards yet</p>
+            <p className='col-span-full text-muted-foreground -mt-5'>No boards yet</p>
           )}
         </div>
       </DragDropContext>
