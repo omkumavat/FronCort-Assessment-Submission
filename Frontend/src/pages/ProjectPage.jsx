@@ -31,7 +31,7 @@ const ProjectPage = () => {
   const fetchProject = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:4000/server/projects/getbyid/${id}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/projects/getbyid/${id}`);
       setProject(res.data);
       setActivityRefreshKey(prev => prev + 1);
     } catch (err) {

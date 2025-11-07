@@ -58,7 +58,7 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
   useEffect(() => {
     const fetchAccess = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/server/pages/getpagebyid/${documentId}`)
+        const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/pages/getpagebyid/${documentId}`)
         const pageAccess = res.data.page?.access === "write" ? "write" : "read"
         setAccess(pageAccess)
         const canEdit = pageAccess === "write" || authName === user.name
@@ -100,7 +100,7 @@ const Editor = ({ documentId, authName, initialContent, access: initialAccess, o
     if (!content) return
     try {
       setIsSaving(true)
-      await axios.put(`http://localhost:4000/server/pages/update/${documentId}`, {
+      await axios.put(`https://froncort-assessment-submission.onrender.com/server/pages/update/${documentId}`, {
         content,
         name: user.name,
         avatar: user.avatar,

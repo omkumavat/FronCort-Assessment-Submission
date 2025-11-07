@@ -7,7 +7,7 @@ const user = initUser();
 export const DeleteCardModal = ({ deleteCardModalOpen, setDeleteCardModalOpen, cardId, projectId, boardId, fetchProject }) => {
   const handleDeleteCard = async () => {
     try {
-      await axios.delete(`http://localhost:4000/server/projects/card/delete/${cardId}/${boardId}`, {
+      await axios.delete(`https://froncort-assessment-submission.onrender.com/server/projects/card/delete/${cardId}/${boardId}`, {
         data: { creator: user.name, avatarUrl: user.avatar, projectId }
       });
       setDeleteCardModalOpen(false);
@@ -50,7 +50,7 @@ export const DeleteCardModal = ({ deleteCardModalOpen, setDeleteCardModalOpen, c
 export const DeleteBoardModal = ({ deleteBoardModalOpen, setDeleteBoardModalOpen, boardId, projectId, fetchProject }) => {
   const handleDeleteBoard = async () => {
     try {
-      await axios.delete(`http://localhost:4000/server/projects/board/delete/${boardId}/${projectId}`, {
+      await axios.delete(`https://froncort-assessment-submission.onrender.com/server/projects/board/delete/${boardId}/${projectId}`, {
         data: { creator: user.name, avatarUrl: user.avatar }
       });
       setDeleteBoardModalOpen(false);

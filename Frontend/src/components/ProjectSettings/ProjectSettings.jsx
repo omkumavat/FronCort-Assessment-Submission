@@ -31,7 +31,7 @@ const ProjectSettings = ({ projectId, open, onOpenChange, fetchProject }) => {
     const fetchAccess = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/server/projects/setting/fetch/${projectId}`
+          `https://froncort-assessment-submission.onrender.com/server/projects/setting/fetch/${projectId}`
         );
         // console.log("Fetched access list:", res.data);
         
@@ -55,7 +55,7 @@ const ProjectSettings = ({ projectId, open, onOpenChange, fetchProject }) => {
     try {
       setLoading(true);
       await axios.put(
-        `http://localhost:4000/server/projects/setting/update/${projectId}`,
+        `https://froncort-assessment-submission.onrender.com/server/projects/setting/update/${projectId}`,
         { accessList }
       );
       toast.success("Project access settings updated successfully!");

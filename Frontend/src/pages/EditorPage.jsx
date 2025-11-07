@@ -42,7 +42,7 @@ const EditorPage = () => {
     const currentUser = user;
 
     axios
-      .get(`http://localhost:4000/server/pages/getpagebyid/${pageId}`)
+      .get(`https://froncort-assessment-submission.onrender.com/server/pages/getpagebyid/${pageId}`)
       .then((res) => {
         const fetchedPage = res.data.page;
         setPage(fetchedPage);
@@ -115,7 +115,7 @@ const EditorPage = () => {
   // Fetch versions
   const handleFetchVersions = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/server/pages/fetch/versions/${pageId}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/pages/fetch/versions/${pageId}`);
       setVersions(res.data.versions);
       setVersionsModalOpen(true);
     } catch (err) {
@@ -127,7 +127,7 @@ const EditorPage = () => {
     setAccessModalOpen(false);
     try {
       await axios.put(
-        `http://localhost:4000/server/pages/manage-access/${pageId}`,
+        `https://froncort-assessment-submission.onrender.com/server/pages/manage-access/${pageId}`,
         { access: newAccess }
       );
       toast.success('Access updated successfully', {

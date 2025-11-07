@@ -31,7 +31,7 @@ const LinkPage = ({
   const handleSearch = async (query) => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:4000/server/projects/page/search?query=${query}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/projects/page/search?query=${query}`);
       setResults(res.data.pages || []);
     } catch (err) {
       console.error("Error fetching pages:", err);
@@ -43,7 +43,7 @@ const LinkPage = ({
   // 🔗 Handle link/unlink page
   const handleLinkPage = async (pageId,title) => {
     try {
-      await axios.put(`http://localhost:4000/server/projects/card/page/link-page/${cardData._id}`, {
+      await axios.put(`https://froncort-assessment-submission.onrender.com/server/projects/card/page/link-page/${cardData._id}`, {
         pageId,
         pageName:title,
         projectId,

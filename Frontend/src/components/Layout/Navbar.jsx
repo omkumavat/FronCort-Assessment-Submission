@@ -41,7 +41,7 @@ const Navbar = ({ onToggleSidebar }) => {
       }
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:4000/server/pages/search?q=${query}`);
+        const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/pages/search?q=${query}`);
         console.log("Search results:", res.data);
 
         setResults(res.data || []);

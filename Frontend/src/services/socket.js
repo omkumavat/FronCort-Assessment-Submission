@@ -4,7 +4,7 @@ let socket = null;
 
 export const connectSocket = () => {
   if (!socket) {
-    socket = io("http://localhost:4000", {
+    socket = io("https://froncort-assessment-submission.onrender.com", {
       autoConnect: true,
       transports: ["websocket"], // force WebSocket
     });

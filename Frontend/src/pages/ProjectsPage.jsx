@@ -18,7 +18,7 @@ const ProjectsPage = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:4000/server/projects/getallmy/${user.name}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/projects/getallmy/${user.name}`);
       if (res) setProjects(res.data);
     } catch (err) {
       console.error(err);

@@ -77,7 +77,7 @@ const BoardsTab = ({ projectId, boards: propBoards, fetchProject, creator, acces
   // --- CRUD Functions ---
   const handleCreateBoard = async () => {
     if (!newBoardName.trim()) return alert('Board title required');
-    await axios.post('http://localhost:4000/server/projects/create/board', { name: newBoardName, projectId, creator: user.name, avatarUrl: user.avatar });
+    await axios.post('https://froncort-assessment-submission.onrender.com/server/projects/create/board', { name: newBoardName, projectId, creator: user.name, avatarUrl: user.avatar });
     setNewBoardName('');
     setBoardModalOpen(false);
     fetchProject();
@@ -85,7 +85,7 @@ const BoardsTab = ({ projectId, boards: propBoards, fetchProject, creator, acces
 
   const handleCreateCard = async () => {
     if (!cardData.title.trim()) return alert('Card title required');
-    await axios.post('http://localhost:4000/server/projects/card/create', { ...cardData, boardId: currentBoardId, projectId, creator: user.name, avatarUrl: user.avatar });
+    await axios.post('https://froncort-assessment-submission.onrender.com/server/projects/card/create', { ...cardData, boardId: currentBoardId, projectId, creator: user.name, avatarUrl: user.avatar });
     resetCard();
     setCardModalOpen(false);
     fetchProject();
@@ -93,7 +93,7 @@ const BoardsTab = ({ projectId, boards: propBoards, fetchProject, creator, acces
 
   const handleEditCard = async () => {
     console.log('Editing card:', cardData);
-    await axios.put(`http://localhost:4000/server/projects/card/edit/${cardData._id}`, { ...cardData, creator: user.name, avatarUrl: user.avatar, projectId });
+    await axios.put(`https://froncort-assessment-submission.onrender.com/server/projects/card/edit/${cardData._id}`, { ...cardData, creator: user.name, avatarUrl: user.avatar, projectId });
     resetCard();
     setEditCardModalOpen(false);
     fetchProject();
@@ -127,7 +127,7 @@ const BoardsTab = ({ projectId, boards: propBoards, fetchProject, creator, acces
 
     // 🔹 Call backend to persist new order
     try {
-      await axios.put('http://localhost:4000/server/projects/card/reorder', {
+      await axios.put('https://froncort-assessment-submission.onrender.com/server/projects/card/reorder', {
         boardId,
         cardId: draggableId,
         sourceIndex: source.index,

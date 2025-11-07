@@ -27,7 +27,7 @@ const CreateProjectModal = ({ open, onClose, onSuccess }) => {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:4000/server/projects/create', newProject);
+      const res = await axios.post('https://froncort-assessment-submission.onrender.com/server/projects/create', newProject);
       const createdProject = res.data.project || res.data;
 
       toast.success('Project created successfully!');

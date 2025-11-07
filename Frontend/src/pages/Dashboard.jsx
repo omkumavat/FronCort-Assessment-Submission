@@ -25,7 +25,7 @@ const Dashboard = () => {
   const fetchProjects = async () => {
     try {
       setLoadingProjects(true);
-      const res = await axios.get(`http://localhost:4000/server/projects/getallmy/${user.name}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/projects/getallmy/${user.name}`);
       if (res && Array.isArray(res.data)) {
         // Sort by updated date (optional)
         const sorted = res.data.sort(

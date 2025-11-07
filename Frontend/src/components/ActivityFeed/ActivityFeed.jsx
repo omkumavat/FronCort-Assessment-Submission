@@ -26,7 +26,7 @@ const ActivityFeed = ({ projectId, refreshKey }) => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:4000/server/projects/activity/fetch/${projectId}`
+          `https://froncort-assessment-submission.onrender.com/server/projects/activity/fetch/${projectId}`
         );
         console.log(res.data);
         

@@ -19,7 +19,7 @@ export const useEditorStore = create((set, get) => ({
 
   createPage: async (title) => {
     try {
-      const res = await axios.post('http://localhost:4000/server/pages/create', { title, authorId: user.name,avatar:user.avatar });
+      const res = await axios.post('https://froncort-assessment-submission.onrender.com/server/pages/create', { title, authorId: user.name,avatar:user.avatar });
       const newPage = res.data.page;
       get().setPage(newPage._id, newPage);
       return newPage._id;
@@ -33,7 +33,7 @@ export const useEditorStore = create((set, get) => ({
   // ✅ Fetch all pages from backend
   fetchAllPages: async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/server/pages/getall/${user.name}`);
+      const res = await axios.get(`https://froncort-assessment-submission.onrender.com/server/pages/getall/${user.name}`);
       const pag = res.data.page;
       const pagesMap = {};
       pag.forEach((p) => (pagesMap[p._id] = p));

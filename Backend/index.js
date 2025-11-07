@@ -111,7 +111,7 @@
 
 // // Start server
 // server.listen(4000, () =>
-//   console.log('🚀 Socket.io server running on http://localhost:4000')
+//   console.log('🚀 Socket.io server running on https://froncort-assessment-submission.onrender.com')
 // );
 
 import express from 'express';
@@ -191,5 +191,5 @@ io.on("connection", (socket) => {
 });
 
 
-server.listen(4000, () => console.log('Server running on http://localhost:4000'));
+server.listen(4000, () => console.log('Server running on https://froncort-assessment-submission.onrender.com'));
 
