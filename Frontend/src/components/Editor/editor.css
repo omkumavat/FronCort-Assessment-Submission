@@ -1,0 +1,101 @@
+/* Tiptap Editor Styles */
+/* editor.css */
+.editor-container {
+  width: 100%;
+  max-width: 1200px; /* or whatever fits your layout */
+  height: 80vh;       /* 80% of viewport height */
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow-y: auto;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.editor-content {
+  min-height: 70vh;   /* makes sure content area is large */
+  font-size: 16px;    /* larger text */
+}
+
+.editor-content .ProseMirror {
+  outline: none;
+}
+
+.editor-content .ProseMirror p.is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Headings */
+.editor-content h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  line-height: 1.2;
+}
+
+.editor-content h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  line-height: 1.3;
+}
+
+.editor-content h3 {
+  font-size: 1.17em;
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 1.4;
+}
+
+/* Lists */
+.editor-content ul,
+.editor-content ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.editor-content li {
+  margin: 0.25em 0;
+}
+
+/* Blockquote */
+.editor-content blockquote {
+  border-left: 3px solid hsl(var(--primary));
+  padding-left: 1em;
+  margin-left: 0;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Code */
+.editor-content code {
+  background-color: hsl(var(--muted));
+  border-radius: 0.25em;
+  padding: 0.125em 0.25em;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.editor-content pre {
+  background-color: hsl(var(--muted));
+  border-radius: 0.5em;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.editor-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Selection */
+.editor-content .ProseMirror ::selection {
+  background-color: hsl(var(--primary) / 0.2);
+}
