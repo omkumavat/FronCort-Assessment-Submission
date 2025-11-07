@@ -172,6 +172,7 @@ io.on("connection", (socket) => {
   // --- Handle document updates ---
   socket.on("document-update", async ({ pageId, update }) => {
     await Page.updateOne({ pageId }, { content: update });
+    console.log(`👤 updated page ${pageId}`);
     socket.to(pageId).emit("document-update", update);
   });
 
