@@ -15,6 +15,7 @@ A complete, production-ready React.js frontend for a collaborative workspace, co
 * **💾 Auto-save** - Never lose your work with automatic saving
 * **📱 Fully Responsive** - Works seamlessly on all devices
 * **🔔 Smart Notifications** - Toast notifications for all important events
+* **🔔 Mention User** - Toast notifications for the user which is mentioned in editor like @User-123 
 
 ---
 
