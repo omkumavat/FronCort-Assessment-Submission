@@ -18,7 +18,6 @@ router.get('/getallmy/:user', async (req, res) => {
     }
 });
 
-// POST /api/projects - create new project
 router.post('/create', async (req, res) => {
     const { name, description, creator } = req.body;
 

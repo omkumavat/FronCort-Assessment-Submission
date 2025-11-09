@@ -12,7 +12,7 @@ import Layout from "./components/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import ProjectPage from "./pages/ProjectPage";
 import EditorPage from "./pages/EditorPage";
-import KanbanPage from "./pages/KanbanPage";
+// import KanbanPage from "./pages/KanbanPage";
 import NotFound from "./pages/NotFound";
 import ProjectsPage from "./pages/ProjectsPage";
 
@@ -38,7 +38,7 @@ const App = () => {
                   <Route path="project/:id" element={<ProjectPage />} />
                    <Route path="projects" element={<ProjectsPage />} />
                   <Route path="editor/:pageId" element={<EditorPage />} />
-                  <Route path="board/:id" element={<KanbanPage />} />
+                  {/* <Route path="board/:id" element={<KanbanPage />} /> */}
                 </Route>
 
                 {/* Fallback route */}

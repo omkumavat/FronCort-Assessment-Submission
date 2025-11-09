@@ -3,10 +3,7 @@ import Navbar from './Navbar'
 import Sidebar from '../Sidebar/Sidebar'
 import { useState, useEffect } from 'react'
 
-/**
- * Layout Component
- * Main app layout with responsive sidebar and navbar
- */
+
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [isMobile, setIsMobile] = useState(false)

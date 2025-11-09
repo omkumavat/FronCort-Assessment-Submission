@@ -7,8 +7,6 @@ import Card from '../Models/Card.js';
 import PageVersion from '../Models/Version.js';
 
 
-// ------------------- REST APIs -------------------
-// Create a new page
 router.post('/create', async (req, res) => {
   const { title, authorId, avatar } = req.body;
   const accessList = { userName: authorId, avatarUrl: avatar };

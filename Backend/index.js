@@ -12,11 +12,8 @@ import dotenv from 'dotenv';
 import connectDB from './Database/db.js';
 import Project from './Router/Project.js'
 dotenv.config();
-
-// ------------------- MongoDB -------------------
 connectDB();
 
-// ------------------- Express -------------------
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -34,7 +31,6 @@ const io = new Server(server, {
 app.use('/server/pages', Pages);
 app.use('/server/projects',Project)
 
-// ------------------- Socket.io -------------------
 const userSessions = new Map(); // Track connected users by socket.id
 
 io.on("connection", (socket) => {
@@ -78,7 +74,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const userData = userSessions.get(socket.id);
     if (userData) {
-      console.log(`❌ ${userData.name} disconnected from page ${userData.pageId}`);
+      console.log(` ${userData.name} disconnected from page ${userData.pageId}`);
       socket.to(userData.pageId).emit("user-left", { user: userData });
       userSessions.delete(socket.id);
     }
@@ -86,6 +82,5 @@ io.on("connection", (socket) => {
 });
 
 
-// ------------------- Start server -------------------
-server.listen(4000, () => console.log('🚀 Server running on https://froncort-assessment-submission.onrender.com'));
+server.listen(4000, () => console.log('Server running on https://froncort-assessment-submission.onrender.com'));
 

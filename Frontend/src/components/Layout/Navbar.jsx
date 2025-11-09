@@ -56,7 +56,6 @@ const Navbar = ({ onToggleSidebar }) => {
     return () => clearTimeout(delay);
   }, [query]);
 
-  // Helper for icons
   const getIcon = (type) => {
     switch (type) {
       case "project":
